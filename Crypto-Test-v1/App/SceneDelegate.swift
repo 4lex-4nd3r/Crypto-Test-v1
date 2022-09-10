@@ -59,7 +59,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       if defaults.object(forKey: "isLogged") != nil {
          let isLogged = defaults.bool(forKey: "isLogged")
          if isLogged {
-            let nav = UINavigationController(rootViewController: ListViewController())
+            let nav = UINavigationController(rootViewController: CoinsViewController())
             return nav
          } else {
             let nav = UINavigationController(rootViewController: LoginViewController())

@@ -10,12 +10,8 @@ import UIKit
 class DetailViewController : UIViewController {
    
    // MARK: - Properties
-   
-   var coin: Coin? {
-      didSet {
-         setupLabels()
-      }
-   }
+
+
    
    private let nameLabel: UILabel = {
       let label = UILabel()
@@ -60,6 +56,19 @@ class DetailViewController : UIViewController {
    }()
    
    private var detailStack = UIStackView()
+   
+   weak var viewModel: DetailViewModelProtocol? {
+      didSet {
+         guard let viewModel = viewModel else { return }
+         nameLabel.text = viewModel.name
+         priceLabel.text = viewModel.price
+         changeLabel.text = viewModel.change
+         athLabel.text = viewModel.ath
+         volumeLabel.text = viewModel.volume
+         marketcapLabel.text = viewModel.marketcap
+         rankLabel.text = viewModel.rank
+      }
+   }
 
    
    // MARK: - Lifecycle
@@ -88,32 +97,7 @@ class DetailViewController : UIViewController {
       detailStack.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview(detailStack)
    }
-   
-   private func setupLabels() {
-      
-      guard let coin = coin else { return }
-      
-      let name = coin.data.name
-      let price = String(format: "%.2f", coin.data.marketData.priceUsd)
-      let change = String(format: "%.2f", coin.data.marketData.percentChangeUsdLast24Hours)
-      let ath = String(format: "%.2f", coin.data.allTimeHigh.price)
-      let volume = String(format: "%.2f", coin.data.marketData.volumeLast24Hours)
-      let marketcap = String(format: "%.2f", coin.data.marketData.priceUsd)
-      let rank = coin.data.marketcap.rank
-      
-      nameLabel.text = name
-      priceLabel.text = "Price today - " + price + " usd"
-      changeLabel.text = "Changes last 24 hours - " + change + " %"
-      athLabel.text = "All time hight price - " + ath + " usd"
-      volumeLabel.text = "Trade volume last 24 hours - " + volume + " usd"
-      marketcapLabel.text = "Market capitalization - " + marketcap + " usd"
-      rankLabel.text = "World rank by capitlization - " + "\(rank)"
 
-   }
-   
-   //MARK: - Selectors
-   
-   
    //MARK: - Constraints
    
    private func setConstraints() {

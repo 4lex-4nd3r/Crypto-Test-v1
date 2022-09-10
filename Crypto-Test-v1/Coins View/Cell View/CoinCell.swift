@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListCell: UITableViewCell {
+class CoinCell: UITableViewCell {
    
    
    // MARK: - Properties
@@ -30,6 +30,14 @@ class ListCell: UITableViewCell {
       return label
    }()
    
+   weak var viewModel: CoinCellViewModelProtocol? {
+      didSet {
+         guard let viewModel = viewModel else { return }
+         nameLabel.text = viewModel.name
+         priceLabel.text = viewModel.price
+         changeLabel.text = viewModel.change
+      }
+   }
    
    // MARK: - Init
    
@@ -48,20 +56,9 @@ class ListCell: UITableViewCell {
    private func setupViews() {
       backgroundColor = .clear
       selectionStyle = .none
-     addSubview(nameLabel)
+      addSubview(nameLabel)
       addSubview(priceLabel)
       addSubview(changeLabel)
-   }
-   
-   func configure(coin: Coin) {
-
-      let name = coin.data.name
-      let price = String(format: "%.2f", coin.data.marketData.priceUsd)
-      let change = String(format: "%.2f", coin.data.marketData.percentChangeUsdLast24Hours)
-      
-      nameLabel.text = name
-      priceLabel.text = price + " usd"
-      changeLabel.text = change + " %"
    }
    
    // MARK: - Constraints

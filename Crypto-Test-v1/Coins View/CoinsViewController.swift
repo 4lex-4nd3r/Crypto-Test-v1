@@ -7,38 +7,11 @@
 
 import UIKit
 
-class ListViewController : UIViewController {
+class CoinsViewController : UIViewController {
    
    // MARK: - Properties
    
-   
-   let coins: [Coin] = [
-      Coin(data: DataClass(name: "btc",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "eth",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "dot",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "xrp",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "ada",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10)))
-   ]
+   private var viewModel: CoinsViewModelProtocol?
    
    private let tableView: UITableView = {
       let tv = UITableView()
@@ -46,14 +19,15 @@ class ListViewController : UIViewController {
       return tv
    }()
    
-   private let listCell = ListCell()
-   private let idListCell = "idPostsCell"
+   private let coinCell = CoinCell()
+   private let idCoinCell = "idCoinCell"
    
    
    // MARK: - Lifecycle
    
    override func viewDidLoad() {
       super.viewDidLoad()
+      viewModel = CoinsViewModel()
       setupViews()
       setConstraints()
       setDelegates()
@@ -71,7 +45,7 @@ class ListViewController : UIViewController {
       navigationItem.title = "Coins"
 
       view.addSubview(tableView)
-      tableView.register(ListCell.self, forCellReuseIdentifier: idListCell)
+      tableView.register(CoinCell.self, forCellReuseIdentifier: idCoinCell)
    }
    
    private func setDelegates() {
@@ -107,35 +81,33 @@ class ListViewController : UIViewController {
 
 //MARK: - UITableViewDelegate
 
-extension ListViewController: UITableViewDelegate {
+extension CoinsViewController: UITableViewDelegate {
    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
       50
    }
    
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      let coin = coins[indexPath.row]
       let detailVC = DetailViewController()
-      detailVC.coin = coin
+      detailVC.viewModel = viewModel?.detailViewModel(for: indexPath)
       navigationController?.pushViewController(detailVC, animated: true)
    }
 }
 
 //MARK: - UITableViewDataSource
 
-extension ListViewController: UITableViewDataSource {
-   
+extension CoinsViewController: UITableViewDataSource {
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      coins.count
+      viewModel?.numberOfRows ?? 0
    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: idListCell, for: indexPath) as? ListCell else { return UITableViewCell() }
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: idCoinCell, for: indexPath) as? CoinCell else { return UITableViewCell() }
       
-      let coin = coins[indexPath.row]
-      cell.configure(coin: coin)
-      
+      guard let viewModel = viewModel else { return UITableViewCell() }
+      let cellViewModel = viewModel.cellViewModel(for: indexPath)
+      cell.viewModel = cellViewModel
       return cell
    }
 }
