@@ -14,6 +14,7 @@ protocol LoginViewModelProtocol {
    func loginButtonPressed(login: String?, password: String?)
 }
 
+
 class LoginViewModel: LoginViewModelProtocol {
    
    var isLoginOk: Bool = false
