@@ -39,11 +39,9 @@ struct MarketData: Codable {
 
 struct Marketcap: Codable {
    let rank: Int
-   let currentMarketcapUsd: Double
    
    enum CodingKeys: String, CodingKey {
       case rank
-      case currentMarketcapUsd = "current_marketcap_usd"
    }
 }
 

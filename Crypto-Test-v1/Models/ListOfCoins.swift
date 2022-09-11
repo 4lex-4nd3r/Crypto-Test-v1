@@ -10,6 +10,6 @@ import Foundation
 struct ListOfCoins {
    
    static let coins = [
-      "btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"
+      "btc", "eth", "tron", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"
    ]
 }

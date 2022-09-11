@@ -39,12 +39,7 @@ class DetailViewController : UIViewController {
    
    private let volumeLabel: UILabel = {
       let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
-      return label
-   }()
-   
-   private let marketcapLabel: UILabel = {
-      let label = UILabel()
+      label.adjustsFontSizeToFitWidth = true
       label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
@@ -65,7 +60,6 @@ class DetailViewController : UIViewController {
          changeLabel.text = viewModel.change
          athLabel.text = viewModel.ath
          volumeLabel.text = viewModel.volume
-         marketcapLabel.text = viewModel.marketcap
          rankLabel.text = viewModel.rank
       }
    }
@@ -89,7 +83,6 @@ class DetailViewController : UIViewController {
                                                    changeLabel,
                                                    athLabel,
                                                    volumeLabel,
-                                                   marketcapLabel,
                                                    rankLabel])
       detailStack.axis = .vertical
       detailStack.spacing = 20

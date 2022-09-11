@@ -11,12 +11,23 @@ class CoinsViewController : UIViewController {
    
    // MARK: - Properties
    
-   private var viewModel: CoinsViewModelProtocol?
+   private var viewModel: CoinsViewModelProtocol? {
+      didSet {
+         tableView.reloadData()
+      }
+   }
    
    private let tableView: UITableView = {
       let tv = UITableView()
       tv.translatesAutoresizingMaskIntoConstraints = false
       return tv
+   }()
+   
+   private let activity: UIActivityIndicatorView = {
+      let act = UIActivityIndicatorView()
+      act.translatesAutoresizingMaskIntoConstraints = false
+      act.startAnimating()
+      return act
    }()
    
    private let coinCell = CoinCell()
@@ -27,10 +38,10 @@ class CoinsViewController : UIViewController {
    
    override func viewDidLoad() {
       super.viewDidLoad()
-      viewModel = CoinsViewModel()
       setupViews()
       setConstraints()
       setDelegates()
+      loadCoins()
    }
    
    //MARK: - Setups
@@ -38,19 +49,30 @@ class CoinsViewController : UIViewController {
    private func setupViews() {
       view.backgroundColor = .systemBackground
       let logoutButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.badge.xmark"), style: .done, target: self, action: #selector(logoutButtonTapped))
-      navigationItem.leftBarButtonItem = logoutButton
       let sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.square"), style: .done, target: self, action: #selector(sortButtonTapped))
+      navigationItem.leftBarButtonItem = logoutButton
       navigationItem.rightBarButtonItem = sortButton
-      
       navigationItem.title = "Coins"
-
       view.addSubview(tableView)
       tableView.register(CoinCell.self, forCellReuseIdentifier: idCoinCell)
+      view.addSubview(activity)
    }
    
    private func setDelegates() {
       tableView.delegate = self
       tableView.dataSource = self
+   }
+   
+   private func loadCoins() {
+      let networkManager = NetworkManager()
+      networkManager.getAllCoins { [weak self] coins in
+         guard let self = self else { return }
+         print(Thread.current)
+         self.activity.stopAnimating()
+         self.activity.isHidden = true
+         self.viewModel = CoinsViewModel(coins: coins)
+         self.tableView.reloadData()
+      }
    }
    
    
@@ -64,12 +86,19 @@ class CoinsViewController : UIViewController {
    }
    
    @objc private func sortButtonTapped() {
-      print("sortButtonTapped")
+      viewModel?.sortByPercents()
+      tableView.reloadData()
    }
    
    //MARK: - Constraints
    
    private func setConstraints() {
+      
+      NSLayoutConstraint.activate([
+         activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+      ])
+      
       NSLayoutConstraint.activate([
          tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
          tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

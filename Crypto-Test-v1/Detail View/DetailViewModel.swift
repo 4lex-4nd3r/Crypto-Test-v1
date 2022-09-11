@@ -14,7 +14,6 @@ protocol DetailViewModelProtocol: AnyObject {
    var change: String { get }
    var ath: String { get }
    var volume: String { get }
-   var marketcap: String { get }
    var rank: String { get }
 }
 
@@ -46,13 +45,8 @@ class DetailViewModel: DetailViewModelProtocol {
    }
    
    var volume: String {
-      let volumeData = String(format: "%.2f", coin.data.marketData.volumeLast24Hours)
-      return "Trade volume last 24 hours - " + volumeData + " usd"
-   }
-   
-   var marketcap: String {
-      let marketcapData = String(format: "%.2f", coin.data.marketData.priceUsd)
-      return "Market capitalization - " + marketcapData + " usd"
+      let volumeData = String(format: "%.2f", (coin.data.marketData.volumeLast24Hours / 1000000))
+      return "Trade volume last 24 hours - " + volumeData + " mln usd"
    }
    
    var rank: String {

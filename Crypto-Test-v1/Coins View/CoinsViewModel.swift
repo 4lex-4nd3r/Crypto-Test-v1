@@ -12,12 +12,17 @@ protocol CoinsViewModelProtocol {
    var numberOfRows: Int { get }
    func cellViewModel(for indexPath: IndexPath) -> CoinCellViewModelProtocol?
    func detailViewModel(for indexPath: IndexPath) -> DetailViewModelProtocol?
-   var coins: [Coin] { get }
+   func sortByPercents()
 }
 
 class CoinsViewModel: CoinsViewModelProtocol {
+
+   private var coins: [Coin]
    
-   
+   init(coins: [Coin]) {
+      self.coins = coins
+   }
+
    func cellViewModel(for indexPath: IndexPath) -> CoinCellViewModelProtocol? {
       let coin = coins[indexPath.row]
       return CoinCellViewModel(coin: coin)
@@ -32,34 +37,18 @@ class CoinsViewModel: CoinsViewModelProtocol {
       coins.count
    }
    
-   let coins: [Coin] = [
-      Coin(data: DataClass(name: "btc",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "eth",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "dot",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "xrp",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10))),
-      Coin(data: DataClass(name: "ada",
-                           marketData: MarketData(priceUsd: 100,
-                                                  volumeLast24Hours: 100, percentChangeUsdLast24Hours: 100),
-                           marketcap: Marketcap(rank: 1, currentMarketcapUsd: 100),
-                           allTimeHigh: AllTimeHigh(price: 10)))
-   ]
+   private var isUpToDown: Bool = true
    
-   
-   
+   func sortByPercents() {
+      
+      if isUpToDown {
+         let sortedCoins = coins.sorted { $0.data.marketData.percentChangeUsdLast24Hours > $1.data.marketData.percentChangeUsdLast24Hours }
+         coins = sortedCoins
+         isUpToDown.toggle()
+      } else {
+         let sortedCoins = coins.sorted { $0.data.marketData.percentChangeUsdLast24Hours < $1.data.marketData.percentChangeUsdLast24Hours }
+         coins = sortedCoins
+         isUpToDown.toggle()
+      }
+   }
 }
