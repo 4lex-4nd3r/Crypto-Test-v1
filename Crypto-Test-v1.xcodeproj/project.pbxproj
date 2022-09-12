@@ -14,7 +14,6 @@
 		1FE193C228CB463C00CA8E59 /* CoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193C128CB463C00CA8E59 /* CoinsViewController.swift */; };
 		1FE193C428CBA1E900CA8E59 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193C328CBA1E900CA8E59 /* DetailViewController.swift */; };
 		1FE193C828CBA21500CA8E59 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193C728CBA21500CA8E59 /* Coin.swift */; };
-		1FE193CB28CBA22600CA8E59 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193CA28CBA22600CA8E59 /* NetworkManager.swift */; };
 		1FE193CE28CBA2A700CA8E59 /* ListOfCoins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193CD28CBA2A700CA8E59 /* ListOfCoins.swift */; };
 		1FE193D128CBB2EF00CA8E59 /* ViewController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193D028CBB2EF00CA8E59 /* ViewController +.swift */; };
 		1FE193D528CBC25200CA8E59 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193D428CBC25200CA8E59 /* CoinCell.swift */; };
@@ -23,6 +22,10 @@
 		1FE193E028CC998000CA8E59 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193DE28CC998000CA8E59 /* LoginViewController.swift */; };
 		1FE193E228CC99B800CA8E59 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193E128CC99B800CA8E59 /* DetailViewModel.swift */; };
 		1FE193E428CCA3CB00CA8E59 /* CoinCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193E328CCA3CB00CA8E59 /* CoinCellViewModel.swift */; };
+		1FE193E828CF266F00CA8E59 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193E728CF266F00CA8E59 /* LoginManager.swift */; };
+		1FE193EA28CF27A100CA8E59 /* GetCoinsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193E928CF27A100CA8E59 /* GetCoinsManager.swift */; };
+		1FE193EC28CF27C100CA8E59 /* GetSingleCoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193EB28CF27C100CA8E59 /* GetSingleCoinManager.swift */; };
+		1FE193EE28CF32E200CA8E59 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE193ED28CF32E200CA8E59 /* Login.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +38,6 @@
 		1FE193C128CB463C00CA8E59 /* CoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsViewController.swift; sourceTree = "<group>"; };
 		1FE193C328CBA1E900CA8E59 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		1FE193C728CBA21500CA8E59 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
-		1FE193CA28CBA22600CA8E59 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		1FE193CD28CBA2A700CA8E59 /* ListOfCoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfCoins.swift; sourceTree = "<group>"; };
 		1FE193D028CBB2EF00CA8E59 /* ViewController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController +.swift"; sourceTree = "<group>"; };
 		1FE193D428CBC25200CA8E59 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
@@ -44,6 +46,10 @@
 		1FE193DE28CC998000CA8E59 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1FE193E128CC99B800CA8E59 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		1FE193E328CCA3CB00CA8E59 /* CoinCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCellViewModel.swift; sourceTree = "<group>"; };
+		1FE193E728CF266F00CA8E59 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		1FE193E928CF27A100CA8E59 /* GetCoinsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoinsManager.swift; sourceTree = "<group>"; };
+		1FE193EB28CF27C100CA8E59 /* GetSingleCoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSingleCoinManager.swift; sourceTree = "<group>"; };
+		1FE193ED28CF32E200CA8E59 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +101,7 @@
 			children = (
 				1FE193AD28CB450500CA8E59 /* AppDelegate.swift */,
 				1FE193AF28CB450500CA8E59 /* SceneDelegate.swift */,
+				1FE193E728CF266F00CA8E59 /* LoginManager.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -112,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				1FE193C728CBA21500CA8E59 /* Coin.swift */,
-				1FE193CD28CBA2A700CA8E59 /* ListOfCoins.swift */,
+				1FE193EF28CF4FBD00CA8E59 /* Enums */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -120,7 +127,8 @@
 		1FE193CC28CBA22A00CA8E59 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1FE193CA28CBA22600CA8E59 /* NetworkManager.swift */,
+				1FE193E928CF27A100CA8E59 /* GetCoinsManager.swift */,
+				1FE193EB28CF27C100CA8E59 /* GetSingleCoinManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -159,6 +167,15 @@
 				1FE193D428CBC25200CA8E59 /* CoinCell.swift */,
 			);
 			path = "Cell View";
+			sourceTree = "<group>";
+		};
+		1FE193EF28CF4FBD00CA8E59 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				1FE193CD28CBA2A700CA8E59 /* ListOfCoins.swift */,
+				1FE193ED28CF32E200CA8E59 /* Login.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,13 +249,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FE193E028CC998000CA8E59 /* LoginViewController.swift in Sources */,
+				1FE193EE28CF32E200CA8E59 /* Login.swift in Sources */,
 				1FE193D128CBB2EF00CA8E59 /* ViewController +.swift in Sources */,
 				1FE193C828CBA21500CA8E59 /* Coin.swift in Sources */,
 				1FE193D828CC690800CA8E59 /* CoinsViewModel.swift in Sources */,
 				1FE193CE28CBA2A700CA8E59 /* ListOfCoins.swift in Sources */,
+				1FE193EC28CF27C100CA8E59 /* GetSingleCoinManager.swift in Sources */,
+				1FE193E828CF266F00CA8E59 /* LoginManager.swift in Sources */,
 				1FE193D528CBC25200CA8E59 /* CoinCell.swift in Sources */,
+				1FE193EA28CF27A100CA8E59 /* GetCoinsManager.swift in Sources */,
 				1FE193AE28CB450500CA8E59 /* AppDelegate.swift in Sources */,
-				1FE193CB28CBA22600CA8E59 /* NetworkManager.swift in Sources */,
 				1FE193DF28CC998000CA8E59 /* LoginViewModel.swift in Sources */,
 				1FE193E228CC99B800CA8E59 /* DetailViewModel.swift in Sources */,
 				1FE193C428CBA1E900CA8E59 /* DetailViewController.swift in Sources */,

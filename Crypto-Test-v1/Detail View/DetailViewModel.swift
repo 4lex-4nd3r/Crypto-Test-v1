@@ -8,6 +8,8 @@
 import Foundation
 
 protocol DetailViewModelProtocol: AnyObject {
+   
+   init(coin: Coin)
 
    var name: String { get }
    var price: String { get }
@@ -15,13 +17,19 @@ protocol DetailViewModelProtocol: AnyObject {
    var ath: String { get }
    var volume: String { get }
    var rank: String { get }
+   
+   //#fixed - callback на случай если будет взаимодействие с элементами на экране
+   var viewModelDidChange: ((DetailViewModelProtocol) -> Void)? { get set }
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-
-   var coin: Coin
    
-   init(coin: Coin) {
+   var viewModelDidChange: ((DetailViewModelProtocol) -> Void)?
+      
+//   #fixed
+   private var coin: Coin 
+   
+   required init(coin: Coin) {
       self.coin = coin
    }
    
@@ -35,7 +43,7 @@ class DetailViewModel: DetailViewModelProtocol {
    }
    
    var change: String {
-      let changeData = String(format: "%.2f", coin.data.marketData.percentChangeUsdLast24Hours)
+      let changeData = String(format: "%.2f", coin.data.marketData.percents)
       return "Changes last 24 hours - " + changeData + " %"
    }
    

@@ -7,11 +7,14 @@
 
 import Foundation
 
-struct Coin: Codable {
+//#fixed (согласен, данные не отправляем)
+//#error("можно просто декодебл протокол")
+
+struct Coin: Decodable {
    let data: DataClass
 }
 
-struct DataClass: Codable {
+struct DataClass: Decodable {
    let name: String
    let marketData: MarketData
    let marketcap: Marketcap
@@ -25,19 +28,19 @@ struct DataClass: Codable {
    }
 }
 
-struct MarketData: Codable {
+struct MarketData: Decodable {
    let priceUsd: Double
    let volumeLast24Hours: Double
-   let percentChangeUsdLast24Hours: Double
+   let percents: Double
    
    enum CodingKeys: String, CodingKey {
       case priceUsd = "price_usd"
       case volumeLast24Hours = "volume_last_24_hours"
-      case percentChangeUsdLast24Hours = "percent_change_usd_last_24_hours"
+      case percents = "percent_change_usd_last_24_hours"
    }
 }
 
-struct Marketcap: Codable {
+struct Marketcap: Decodable {
    let rank: Int
    
    enum CodingKeys: String, CodingKey {
@@ -45,7 +48,7 @@ struct Marketcap: Codable {
    }
 }
 
-struct AllTimeHigh: Codable {
+struct AllTimeHigh: Decodable {
    let price: Double
 }
 

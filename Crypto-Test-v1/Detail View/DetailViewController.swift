@@ -11,8 +11,6 @@ class DetailViewController : UIViewController {
    
    // MARK: - Properties
 
-
-   
    private let nameLabel: UILabel = {
       let label = UILabel()
       label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,25 +50,25 @@ class DetailViewController : UIViewController {
    
    private var detailStack = UIStackView()
    
-   weak var viewModel: DetailViewModelProtocol? {
-      didSet {
-         guard let viewModel = viewModel else { return }
-         nameLabel.text = viewModel.name
-         priceLabel.text = viewModel.price
-         changeLabel.text = viewModel.change
-         athLabel.text = viewModel.ath
-         volumeLabel.text = viewModel.volume
-         rankLabel.text = viewModel.rank
-      }
-   }
-
+   var viewModel: DetailViewModelProtocol
    
    // MARK: - Lifecycle
+   
+//   #fixed
+   required init(viewModel: DetailViewModelProtocol) {
+      self.viewModel = viewModel
+      super.init(nibName: nil, bundle: nil)
+   }
+   
+   required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+   }
    
    override func viewDidLoad() {
       super.viewDidLoad()
       setupViews()
       setConstraints()
+      setValues()
    }
    
    //MARK: - Setups
@@ -89,6 +87,19 @@ class DetailViewController : UIViewController {
       detailStack.distribution = .fillEqually
       detailStack.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview(detailStack)
+   }
+   
+   private func setValues() {
+//      #fixed
+      viewModel.viewModelDidChange = { viewModel in
+         //код для выполнения при изменении во viewModel
+      }
+      nameLabel.text = viewModel.name
+      priceLabel.text = viewModel.price
+      changeLabel.text = viewModel.change
+      athLabel.text = viewModel.ath
+      volumeLabel.text = viewModel.volume
+      rankLabel.text = viewModel.rank
    }
 
    //MARK: - Constraints

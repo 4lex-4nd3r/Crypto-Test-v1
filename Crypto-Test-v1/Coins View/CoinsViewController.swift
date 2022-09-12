@@ -11,12 +11,6 @@ class CoinsViewController : UIViewController {
    
    // MARK: - Properties
    
-   private var viewModel: CoinsViewModelProtocol? {
-      didSet {
-         tableView.reloadData()
-      }
-   }
-   
    private let tableView: UITableView = {
       let tv = UITableView()
       tv.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +27,23 @@ class CoinsViewController : UIViewController {
    private let coinCell = CoinCell()
    private let idCoinCell = "idCoinCell"
    
+//   #fixed
+   private var viewModel: CoinsViewModelProtocol! {
+      didSet {
+         viewModel.viewModelDidChange = { [weak self] viewModel in
+            print("viewModelDidChange")
+            guard let self = self else { return }
+            self.tableView.reloadData()
+         }
+         
+         viewModel.getCoins { [weak self] in
+            guard let self = self else { return }
+            self.activity.stopAnimating()
+            self.activity.isHidden = true
+            self.tableView.reloadData()
+         }
+      }
+   }
    
    // MARK: - Lifecycle
    
@@ -41,7 +52,7 @@ class CoinsViewController : UIViewController {
       setupViews()
       setConstraints()
       setDelegates()
-      loadCoins()
+      viewModel = CoinsViewModel()
    }
    
    //MARK: - Setups
@@ -62,32 +73,32 @@ class CoinsViewController : UIViewController {
       tableView.delegate = self
       tableView.dataSource = self
    }
-   
-   private func loadCoins() {
-      let networkManager = NetworkManager()
-      networkManager.getAllCoins { [weak self] coins in
-         guard let self = self else { return }
-         print(Thread.current)
-         self.activity.stopAnimating()
-         self.activity.isHidden = true
-         self.viewModel = CoinsViewModel(coins: coins)
-         self.tableView.reloadData()
-      }
-   }
+//   #fixed - монеты загружаем сразу в классе CoinsViewModel
+//   private func loadCoins() {
+////      let getCoinsManager = GetCoinsManager()
+////      getCoinsManager.getAllCoins { [weak self] coins in
+////         guard let self = self else { return }
+////         self.activity.stopAnimating()
+////         self.activity.isHidden = true
+////         self.viewModel = CoinsViewModel(coins: coins)
+////         self.tableView.reloadData()
+////      }
+//   }
    
    
    //MARK: - Selectors
    
    @objc private func logoutButtonTapped() {
       
-      let defaults = UserDefaults.standard
-      defaults.set(false, forKey: "isLogged")
+// #fixed
+//      let defaults = UserDefaults.standard
+//      defaults.set(false, forKey: "isLogged")
+      UserDefaults.standard.set(Login.notLogin.rawValue, forKey: UserDefaultsKeys.loginKey.rawValue)
       navigationController?.setViewControllers([LoginViewController()], animated: false)
    }
    
    @objc private func sortButtonTapped() {
-      viewModel?.sortByPercents()
-      tableView.reloadData()
+      viewModel.sortByPercents()
    }
    
    //MARK: - Constraints
@@ -115,9 +126,17 @@ extension CoinsViewController: UITableViewDelegate {
       50
    }
    
+   //MARK: - to fix
+   
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      let detailVC = DetailViewController()
-      detailVC.viewModel = viewModel?.detailViewModel(for: indexPath)
+      
+//       #error("лучше используй явную иньекцию. Те передавай viewModel через инициализатор ВК")
+//      let detailVC = DetailViewController()
+//      detailVC.viewModel = viewModel?.detailViewModel(for: indexPath)
+      
+// #fixed
+      let viewModel = viewModel.detailViewModel(for: indexPath)
+      let detailVC = DetailViewController(viewModel: viewModel)
       navigationController?.pushViewController(detailVC, animated: true)
    }
 }
@@ -127,16 +146,14 @@ extension CoinsViewController: UITableViewDelegate {
 extension CoinsViewController: UITableViewDataSource {
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      viewModel?.numberOfRows ?? 0
+      viewModel.numberOfRows()
    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
       guard let cell = tableView.dequeueReusableCell(withIdentifier: idCoinCell, for: indexPath) as? CoinCell else { return UITableViewCell() }
-      
-      guard let viewModel = viewModel else { return UITableViewCell() }
-      let cellViewModel = viewModel.cellViewModel(for: indexPath)
-      cell.viewModel = cellViewModel
+
+      cell.viewModel = viewModel.cellViewModel(for: indexPath)
       return cell
    }
 }

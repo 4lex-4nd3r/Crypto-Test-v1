@@ -9,6 +9,7 @@ import Foundation
 
 protocol CoinCellViewModelProtocol: AnyObject {
    
+   init(coin: Coin) 
    var name: String { get }
    var price: String { get }
    var change: String { get }
@@ -18,7 +19,7 @@ class CoinCellViewModel: CoinCellViewModelProtocol {
 
    private var coin: Coin
    
-   init(coin: Coin) {
+   required init(coin: Coin) {
       self.coin = coin
    }
    
@@ -31,6 +32,6 @@ class CoinCellViewModel: CoinCellViewModelProtocol {
    }
    
    var change: String {
-      String(format: "%.2f", coin.data.marketData.percentChangeUsdLast24Hours) + " %"
+      String(format: "%.2f", coin.data.marketData.percents) + " %"
    }
 }

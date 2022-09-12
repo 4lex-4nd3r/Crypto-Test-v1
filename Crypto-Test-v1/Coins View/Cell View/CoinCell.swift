@@ -30,9 +30,8 @@ class CoinCell: UITableViewCell {
       return label
    }()
    
-   weak var viewModel: CoinCellViewModelProtocol? {
+    var viewModel: CoinCellViewModelProtocol! {
       didSet {
-         guard let viewModel = viewModel else { return }
          nameLabel.text = viewModel.name
          priceLabel.text = viewModel.price
          changeLabel.text = viewModel.change

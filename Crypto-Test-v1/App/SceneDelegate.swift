@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       guard let windowScene = (scene as? UIWindowScene) else { return }
       
       window = UIWindow(windowScene: windowScene)
-      let rootVC = getRootVC()
+      let rootVC = LoginManager.shared.getRootVC()
       window?.rootViewController = rootVC
       window?.makeKeyAndVisible()
    }
@@ -50,25 +50,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       // Called as the scene transitions from the foreground to the background.
       // Use this method to save data, release shared resources, and store enough scene-specific state information
       // to restore the scene back to its current state.
-   }
-
-
-   private func getRootVC() -> UIViewController {
-      
-      let defaults = UserDefaults.standard
-      if defaults.object(forKey: "isLogged") != nil {
-         let isLogged = defaults.bool(forKey: "isLogged")
-         if isLogged {
-            let nav = UINavigationController(rootViewController: CoinsViewController())
-            return nav
-         } else {
-            let nav = UINavigationController(rootViewController: LoginViewController())
-            return nav
-         }
-      } else {
-         let nav = UINavigationController(rootViewController: LoginViewController())
-         return nav
-      }
    }
 }
 

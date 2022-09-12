@@ -79,7 +79,7 @@ class LoginViewController : UIViewController {
    
    private var loginStack = UIStackView()
    
-   private var viewModel: LoginViewModelProtocol?
+   private var viewModel: LoginViewModelProtocol!
    
    // MARK: - Lifecycle
    
@@ -130,8 +130,11 @@ class LoginViewController : UIViewController {
          return
       }
       
-      let defaults = UserDefaults.standard
-      defaults.set(true, forKey: "isLogged")
+//      #fixed
+//      let defaults = UserDefaults.standard
+//      defaults.set(true, forKey: "isLogged")
+      
+      UserDefaults.standard.set(Login.login.rawValue, forKey: UserDefaultsKeys.loginKey.rawValue)
       navigationController?.setViewControllers([CoinsViewController()], animated: true)
    }
    
